@@ -4,6 +4,6 @@
 
 namespace autos {
 
-frc2::CommandPtr ExampleAuto();
+frc2::Command *ExampleAuto();
 
 }

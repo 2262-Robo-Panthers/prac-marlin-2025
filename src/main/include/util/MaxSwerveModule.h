@@ -53,17 +53,13 @@ public:
   void ResetDriveEncoder();
 
 private:
-  rev::spark::SparkMax m_motorControllerDrive;
-  rev::spark::SparkMax m_motorControllerSteer;
-  rev::spark::SparkRelativeEncoder m_encoderDrive;
-  rev::spark::SparkAbsoluteEncoder m_encoderSteer;
-  rev::spark::SparkClosedLoopController m_pidLoopDrive;
-  rev::spark::SparkClosedLoopController m_pidLoopSteer;
+  Types::Swerve::MotorPair<rev::spark::SparkMax> m_motorControllers;
+  Types::Swerve::MotorPair<rev::spark::SparkRelativeEncoder, rev::spark::SparkAbsoluteEncoder> m_encoders;
+  Types::Swerve::MotorPair<rev::spark::SparkClosedLoopController> m_pidLoops;
 
   frc::SwerveModuleState m_desiredState{0.0_mps, 0.0_deg};
 
   const units::radian_t m_chassisAngularOffset;
 
-  rev::spark::SparkMaxConfig m_driveConfig;
-  rev::spark::SparkMaxConfig m_steerConfig;
+  Types::Swerve::MotorPair<rev::spark::SparkMaxConfig> m_configs;
 };

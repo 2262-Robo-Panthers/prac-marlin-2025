@@ -6,6 +6,6 @@
 
 #include <frc2/command/Commands.h>
 
-frc2::CommandPtr autos::ExampleAuto() {
-  return frc2::cmd::None();
+frc2::Command *autos::ExampleAuto() {
+  return nullptr;
 }

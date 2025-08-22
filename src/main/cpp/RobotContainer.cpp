@@ -61,7 +61,7 @@ void RobotContainer::ConfigureBindings() {
 
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+frc2::Command *RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return autos::ExampleAuto();
 }
