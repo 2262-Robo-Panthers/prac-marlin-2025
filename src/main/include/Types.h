@@ -9,6 +9,10 @@ enum class CoordinateSystem {
   FIELD,
 };
 
+struct PidCoefficients {
+  double p, i, d;
+};
+
 namespace Swerve {
 
   /**

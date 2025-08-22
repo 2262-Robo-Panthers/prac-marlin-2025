@@ -59,6 +59,77 @@ void RobotContainer::ConfigureBindings() {
     )
   );
 
+  m_subsystemElevator.SetDefaultCommand(
+    frc2::RunCommand(
+      [this]() {
+        m_subsystemElevator.MovePosition(
+          frc::ApplyDeadband(
+            m_endEffectorController.GetRightTriggerAxis() -
+            m_endEffectorController.GetLeftTriggerAxis(), 0.07
+          ) * 0.01
+        );
+      },
+      {&m_subsystemElevator}
+    )
+  );
+
+  m_endEffectorController.A().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(0.0)
+  );
+
+  m_endEffectorController.Y().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(1.0)
+  );
+
+  m_endEffectorController.X().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(0.18)
+  );
+
+  m_endEffectorController.POVDown().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(0.35)
+  );
+
+  m_endEffectorController.POVLeft().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(0.54)
+  );
+
+  m_endEffectorController.POVRight().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(0.95)
+  );
+
+  m_endEffectorController.POVUp().OnTrue(
+    m_subsystemElevator.GoToPosition_Command(1.0)
+  );
+
+  ( m_endEffectorController.LeftBumper() &&
+    m_endEffectorController.Back() ).OnTrue(
+    new frc2::InstantCommand(
+      [this]() {
+        m_subsystemElevator.ResetPosition(0.0);
+      },
+      {&m_subsystemElevator}
+    )
+  );
+
+  ( m_endEffectorController.RightBumper() &&
+    m_endEffectorController.Start() ).OnTrue(
+    new frc2::InstantCommand(
+      [this]() {
+        m_subsystemElevator.ResetPosition(1.0);
+      },
+      {&m_subsystemElevator}
+    )
+  );
+
+  ( m_endEffectorController.LeftBumper() &&
+    m_endEffectorController.RightBumper() ).OnTrue(
+    new frc2::InstantCommand(
+      [this]() {
+        m_subsystemElevator.ToggleKillSwitch();
+      },
+      {&m_subsystemElevator}
+    )
+  );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand() {
