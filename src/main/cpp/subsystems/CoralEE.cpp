@@ -41,5 +41,3 @@ frc2::CommandPtr CoralEE::EjectL4_Command() {
 }
 
 }
-
-CoralEE::CoralEE() = default;

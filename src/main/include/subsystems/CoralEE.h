@@ -9,8 +9,10 @@
 
 #include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
 
+namespace Subsystems {
+
 class CoralEE : public frc2::SubsystemBase {
- public:
+public:
   CoralEE();
 
   void Periodic() override;
@@ -32,3 +34,4 @@ private:
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_motorController;
 };
 
+}
