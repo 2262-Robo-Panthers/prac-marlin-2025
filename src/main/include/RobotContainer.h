@@ -8,6 +8,7 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include "subsystems/Drive.h"
 #include "subsystems/Elevator.h"
+#include "subsystems/CoralEE.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -28,8 +29,9 @@ private:
   frc2::CommandXboxController m_endEffectorController{1};
 
   // The robot's subsystems are defined here...
-  Subsystems::Drive m_subsystemDrive{};
-  Subsystems::Elevator m_subsystemElevator{};
+  Subsystems::Drive m_subsystemDrive;
+  Subsystems::Elevator m_subsystemElevator;
+  Subsystems::CoralEE m_subsystemCoralEE;
 
   void ConfigureBindings();
 };

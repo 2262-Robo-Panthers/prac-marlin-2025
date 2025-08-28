@@ -10,6 +10,9 @@
 #include "commands/Autos.h"
 #include "RobotContainer.h"
 
+#define AXIS(ctrl, bind) frc::ApplyDeadband(ctrl.bind(), 0.07)
+#define Y_AXIS(ctrl, bind) (-AXIS(ctrl, bind))
+
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
 
@@ -18,6 +21,11 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
+
+  /**
+  *** Drive
+  **/
+
   m_subsystemDrive.SetDefaultCommand(
     frc2::RunCommand(
       [this]() {
@@ -58,6 +66,10 @@ void RobotContainer::ConfigureBindings() {
       {&m_subsystemDrive}
     )
   );
+
+  /**
+  *** Elevator
+  **/
 
   m_subsystemElevator.SetDefaultCommand(
     frc2::RunCommand(
@@ -128,6 +140,21 @@ void RobotContainer::ConfigureBindings() {
         m_subsystemElevator.ToggleKillSwitch();
       },
       {&m_subsystemElevator}
+    )
+  );
+
+  /**
+  *** CoralEE
+  **/
+
+  m_subsystemCoralEE.SetDefaultCommand(
+    frc2::RunCommand(
+      [this]() {
+        m_subsystemCoralEE.SetPower(
+          Y_AXIS(m_endEffectorController, GetLeftY)
+        );
+      },
+      {&m_subsystemCoralEE}
     )
   );
 }
