@@ -86,31 +86,38 @@ void RobotContainer::ConfigureBindings() {
   );
 
   m_endEffectorController.A().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(0.0)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(0.0))
   );
 
   m_endEffectorController.Y().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(1.0)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(1.0))
   );
 
   m_endEffectorController.X().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(0.18)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(0.18))
   );
 
   m_endEffectorController.POVDown().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(0.35)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(0.35))
   );
 
   m_endEffectorController.POVLeft().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(0.54)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(0.54))
   );
 
   m_endEffectorController.POVRight().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(0.95)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(0.95))
   );
 
   m_endEffectorController.POVUp().OnTrue(
-    m_subsystemElevator.GoToPosition_Command(1.0)
+    m_subsystemL4CoralArm.GTFO_Command()
+    .AndThen(m_subsystemElevator.GoToPosition_Command(1.0))
   );
 
   ( m_endEffectorController.LeftBumper() &&
@@ -152,6 +159,7 @@ void RobotContainer::ConfigureBindings() {
       [this]() {
         m_subsystemCoralEE.SetPower(
           Y_AXIS(m_endEffectorController, GetLeftY)
+            * ((m_subsystemL4CoralArm.GetPosition() > 0.5) ? -1 : 1)
         );
       },
       {&m_subsystemCoralEE}

@@ -4,16 +4,6 @@
 
 #pragma once
 
-#include <frc2/command/SubsystemBase.h>
-#include "util/PIDSubsystem.h"
+#include <frc2/command/Command.h>
 
-namespace Subsystems {
-
-class L4CoralArm : public PIDSubsystem {
-public:
-  L4CoralArm();
-
-  frc2::CommandPtr GTFO_Command();
-};
-
-}
+#include "subsystems/Elevator.h"
