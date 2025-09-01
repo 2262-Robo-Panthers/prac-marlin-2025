@@ -7,7 +7,10 @@
 #include <frc2/command/button/Trigger.h>
 #include <frc2/command/Commands.h>
 #include <frc2/command/RunCommand.h>
+
 #include "commands/Autos.h"
+#include "util/SafeL4Commands.h"
+
 #include "RobotContainer.h"
 
 #define AXIS(ctrl, bind) frc::ApplyDeadband(ctrl.bind(), 0.07)
@@ -87,37 +90,32 @@ void RobotContainer::ConfigureBindings() {
 
   m_endEffectorController.A().OnTrue(
     m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(0.0))
+      .AndThen(m_subsystemElevator.GoToPosition_Command(0.0))
   );
 
   m_endEffectorController.Y().OnTrue(
     m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(1.0))
+      .AndThen(m_subsystemElevator.GoToPosition_Command(1.0))
   );
 
   m_endEffectorController.X().OnTrue(
-    m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(0.18))
+    SafeIntake_Command(&m_subsystemElevator, &m_subsystemL4CoralArm)
   );
 
   m_endEffectorController.POVDown().OnTrue(
-    m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(0.35))
+    SafeScore_Command(&m_subsystemElevator, &m_subsystemL4CoralArm, 0.35)
   );
 
   m_endEffectorController.POVLeft().OnTrue(
-    m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(0.54))
+    SafeScore_Command(&m_subsystemElevator, &m_subsystemL4CoralArm, 0.54)
   );
 
   m_endEffectorController.POVRight().OnTrue(
-    m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(0.95))
+    SafeScore_Command(&m_subsystemElevator, &m_subsystemL4CoralArm, 0.95)
   );
 
   m_endEffectorController.POVUp().OnTrue(
-    m_subsystemL4CoralArm.GTFO_Command()
-    .AndThen(m_subsystemElevator.GoToPosition_Command(1.0))
+    SafeScoreL4_Command(&m_subsystemElevator, &m_subsystemL4CoralArm)
   );
 
   ( m_endEffectorController.LeftBumper() &&
