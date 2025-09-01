@@ -157,6 +157,22 @@ void RobotContainer::ConfigureBindings() {
       {&m_subsystemCoralEE}
     )
   );
+
+  /**
+  *** L4CoralArm
+  **/
+
+  m_subsystemL4CoralArm.SetDefaultCommand(
+    frc2::RunCommand{
+      [this]() {
+        m_subsystemL4CoralArm.MovePosition(
+          Y_AXIS(m_endEffectorController, GetRightY) * 0.01
+        );
+      },
+      {&m_subsystemL4CoralArm}
+    }
+  );
+
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand() {

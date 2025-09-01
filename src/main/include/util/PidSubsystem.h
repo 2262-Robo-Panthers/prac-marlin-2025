@@ -11,7 +11,7 @@
 
 #include "Types.h"
 
-class PidSubsystem : public frc2::SubsystemBase {
+class PIDSubsystem : public frc2::SubsystemBase {
 public:
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -30,7 +30,7 @@ public:
   virtual void ToggleKillSwitch(bool value);
 
 protected:
-  PidSubsystem(Types::CanId canId, Types::PidCoefficients pid);
+  PIDSubsystem(Types::CanId canId, Types::PidCoefficients pid);
 
   virtual void Initialize();
 

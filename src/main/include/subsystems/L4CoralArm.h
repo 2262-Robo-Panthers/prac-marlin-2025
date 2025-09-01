@@ -5,22 +5,15 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-
-#include <rev/SparkMax.h>
-#include <rev/config/SparkMaxConfig.h>
-
 #include "util/PIDSubsystem.h"
-#include "Types.h"
 
 namespace Subsystems {
 
-class Elevator : public PIDSubsystem {
+class L4CoralArm : public PIDSubsystem {
 public:
-  Elevator();
+  L4CoralArm();
 
-private:
-  rev::spark::SparkMax m_motorFollower;
-  rev::spark::SparkMaxConfig m_followerConfig;
+
 };
-
+  
 }

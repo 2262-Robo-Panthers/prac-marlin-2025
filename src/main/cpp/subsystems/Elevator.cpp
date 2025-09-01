@@ -12,7 +12,7 @@ using namespace rev::spark;
 namespace Subsystems {
 
 Elevator::Elevator() :
-  PidSubsystem{11, {.p = 1.8, .i = 0.0002, .d = 3.0}},
+  PIDSubsystem{11, {.p = 1.8, .i = 0.0002, .d = 3.0}},
   m_motorFollower{12, SparkMax::MotorType::kBrushless}
 {
   m_motorConfig

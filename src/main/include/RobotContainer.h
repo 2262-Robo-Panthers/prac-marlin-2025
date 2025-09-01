@@ -9,6 +9,7 @@
 #include "subsystems/Drive.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/CoralEE.h"
+#include "subsystems/L4CoralArm.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -32,6 +33,7 @@ private:
   Subsystems::Drive m_subsystemDrive;
   Subsystems::Elevator m_subsystemElevator;
   Subsystems::CoralEE m_subsystemCoralEE;
+  Subsystems::L4CoralArm m_subsystemL4CoralArm;
 
   void ConfigureBindings();
 };

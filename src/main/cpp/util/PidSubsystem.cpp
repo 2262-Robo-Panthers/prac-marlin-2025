@@ -9,7 +9,7 @@
 
 using namespace rev::spark;
 
-PidSubsystem::PidSubsystem(Types::CanId canId, Types::PidCoefficients pid) :
+PIDSubsystem::PIDSubsystem(Types::CanId canId, Types::PidCoefficients pid) :
   m_motorController{canId, SparkMax::MotorType::kBrushless},
   m_encoder{m_motorController.GetEncoder()},
   m_pidLoop{m_motorController.GetClosedLoopController()},
@@ -17,7 +17,7 @@ PidSubsystem::PidSubsystem(Types::CanId canId, Types::PidCoefficients pid) :
 {
 }
 
-void PidSubsystem::Initialize() {
+void PIDSubsystem::Initialize() {
   m_motorController.Configure(
     m_motorConfig,
     SparkBase::ResetMode::kResetSafeParameters,
@@ -29,36 +29,36 @@ void PidSubsystem::Initialize() {
 }
 
 // This method will be called once per scheduler run
-void PidSubsystem::Periodic() {
+void PIDSubsystem::Periodic() {
   if (!m_isNeutralized) {
     m_pidLoop.SetReference(m_desiredPosition, SparkLowLevel::ControlType::kPosition);
   }
 }
 
-double PidSubsystem::GetPosition() const {
+double PIDSubsystem::GetPosition() const {
   return m_encoder.GetPosition();
 }
 
-void PidSubsystem::ResetPosition(double position) {
+void PIDSubsystem::ResetPosition(double position) {
   m_desiredPosition = position;
   m_encoder.SetPosition(position);
   m_pidLoop.SetIAccum(0.0);
   m_pidLoop.SetReference(position, SparkLowLevel::ControlType::kPosition);
 }
 
-void PidSubsystem::MovePosition(double change, double min, double max) {
+void PIDSubsystem::MovePosition(double change, double min, double max) {
   GoToPosition(m_desiredPosition + change, min, max);
 }
 
-void PidSubsystem::GoToPosition(double position, double min, double max) {
+void PIDSubsystem::GoToPosition(double position, double min, double max) {
   m_desiredPosition = std::clamp(position, min, max);
 }
 
-bool PidSubsystem::IsInPosition(double position, double tolerance) const {
+bool PIDSubsystem::IsInPosition(double position, double tolerance) const {
   return tolerance < 0.0 || std::abs(GetPosition() - position) <= tolerance;
 }
 
-frc2::CommandPtr PidSubsystem::GoToPosition_Command(double position) {
+frc2::CommandPtr PIDSubsystem::GoToPosition_Command(double position) {
   return
     RunOnce(
       [this, position]() {
@@ -85,7 +85,7 @@ frc2::CommandPtr PidSubsystem::GoToPosition_Command(double position) {
     ));
 }
 
-frc2::CommandPtr PidSubsystem::GoToPositionBlind_Command(double position) {
+frc2::CommandPtr PIDSubsystem::GoToPositionBlind_Command(double position) {
   return RunOnce(
     [this, position]() {
       GoToPosition(position);
@@ -93,11 +93,11 @@ frc2::CommandPtr PidSubsystem::GoToPositionBlind_Command(double position) {
   );
 }
 
-void PidSubsystem::ToggleKillSwitch() {
+void PIDSubsystem::ToggleKillSwitch() {
   ToggleKillSwitch(!m_isNeutralized);
 }
 
-void PidSubsystem::ToggleKillSwitch(bool value) {
+void PIDSubsystem::ToggleKillSwitch(bool value) {
   if (value) {
     m_isNeutralized = true;
   
